@@ -1,4 +1,5 @@
 import permittedCharacters from "./utils/permitted-characters.js";
+import { randomInt } from "node:crypto";
 
 async function handle (){
     let characters = [];
@@ -6,12 +7,12 @@ async function handle (){
     characters = await permittedCharacters();
 
     for (let i = 0; i < process.env.PASSWORD_LENGTH; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        const randomCharIndex = Math.floor(Math.random() * characters[randomIndex].length);
+        const randomIndex = randomInt(characters.length);
+        const randomCharIndex = randomInt(characters[randomIndex].length);
         password += characters[randomIndex][randomCharIndex];
     }
 
-    console.log("Generated password:", password);
+    return password;
 }
 
 export default handle;
